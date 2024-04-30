@@ -3,17 +3,16 @@
 import time
 
 class if_statements():
-    PI = 3.1415
+    PI = 3.1416
     
-    def __init__(self,age):
+    def __init__(self,value):
         self.PI
-        age = age
-        print("My statements constructor")
+        print("My statements constructor", value)
 
     #if simple
     def statements_one(self):
-        a = 33 
-        b = 200
+        a = 200 
+        b = 33
         if b > a:
             print("b is greater than a")
 
@@ -25,6 +24,8 @@ class if_statements():
             print("b is greater than a")
         elif a == b:
             print("a and b are equal")
+        else: 
+            print("caen todas aquí")
     
     #if else ejemplo 
     def statements_three(self):
@@ -48,14 +49,14 @@ class if_statements():
 
     #ejemplo con or (ó caso)
     def statements_five(self):
-        a = 200
+        a = 1
         b = 33
         c = 500
-        z = 1
+        z = 100
         if (a > b or a > c) and (z > b):
             print("At least one of the conditions is True")
         else: 
-            print("Enter here")
+            print("Enter else")
 
     #ejemplo de NOT keyword; este operador nos indica o ayuda a negar la condicion de nuestro IF  
     def statements_six(self):
@@ -68,7 +69,7 @@ class if_statements():
 
     #if anidados ejemplo
     def statements_seven(self):
-        edad = 20
+        edad = 32
         name = "jose Luis"
         size_name = len(name)
         if edad > 30 and size_name > 4:
@@ -85,25 +86,25 @@ class if_statements():
                 
 
     #short way 
-    def statements_shor_way_one(self,a,b):
+    def statements_short_way_one(self,a,b):
         if a > b: print("a is greater than b")
         
 
-    def statements_shor_way_two(self,a,b): 
-        print("A") if a > b else print("B")
+    def statements_short_way_two(self,a,b): 
+        print("A") if a > b else print("B bigger")
         #if a > b:
-            #print(A)
+        #    print("A")
         #else:
-            #print("B")
+        #    print("B")
 
-    def statements_shor_way_three(self,a,b):
+    def statements_short_way_three(self,a,b):
         print("A") if a > b else print("equals") if a == b else print("B")
-        # if a > b : 
-            # print("A")
-        # elif a == b :
-            # print("equals")
-        # else: 
-            # print("B")
+        """if a > b : 
+            print("A")
+        elif a == b :
+            print("equals")
+        else: 
+            print("B")"""
 
     def statements_way_three(self,a,b):
         if a > b : 
@@ -116,7 +117,7 @@ class if_statements():
     def compare_execution(self):
         # get the current time in seconds since the epoch
         proces_seconds_1 = time.time()
-        self.statements_shor_way_three(300,330)
+        self.statements_short_way_three(300,330)
         print("Seconds since process one =",time.time() - proces_seconds_1)
         proces_seconds_2 = time.time()	
         self.statements_way_three(300,330)
@@ -131,9 +132,9 @@ if __name__ == "__main__":
     #obj.statements_five()
     #obj.statements_six()
     #obj.statements_seven()
-    #obj.statements_shor_way_one(360,334)
-    #obj.statements_shor_way_two(333,400)
-    #obj.statements_shor_way_three(333,340)
+    #obj.statements_short_way_one(360,334)
+    #obj.statements_short_way_two(333,400)
+    #obj.statements_short_way_three(333,340)
     obj.compare_execution()
 
     

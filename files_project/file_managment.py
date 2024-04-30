@@ -3,6 +3,7 @@ import shutil
 import pathlib
 from os import walk
 import zipfile
+from pathlib import Path
 
 
 class file_managment():
@@ -72,12 +73,16 @@ class file_managment():
         
     #borrar folder (si esta vacia); necesitas borrar antes los archivos
     def delete_os_folder(self,path,directory_name):
-        # Path
-        path = os.path.join(path, directory_name) 
-        
-        #remove the path
-        os.rmdir(path) # si quieren ejecutar en shell usar -> mdir
-        print("% s has been removed successfully" % directory_name)
+        try:
+            # Path
+            path = os.path.join(path, directory_name) 
+            
+            #remove the path
+            os.rmdir(path) # si quieren ejecutar en shell usar -> mdir
+            print("% s has been removed successfully" % directory_name)
+        except FileNotFoundError as e:
+            print("this folder does not exist")
+            
 
     #borrar folder y sus files dentro
     def delete_shutil_folder(self,path,directory_name):
@@ -110,7 +115,7 @@ class file_managment():
         dir_path = os.path.join(path, directory_name)
         # list to store files name
         list_result = list()
-        for (dir_path, dir_names, file_names) in walk(dir_path):
+        for (dir_path, dir_names, file_names ) in walk(dir_path):
             print(file_names)
 
         print("List of files", list_result)
@@ -129,7 +134,7 @@ class file_managment():
         for entry in path_directory.iterdir():
             # check if it a file
             if entry.is_file():
-                list_files_result.append(entry)
+                list_files_result.append(entry.name)
             else:
                 list_directory_result.append(entry)
 
@@ -147,21 +152,23 @@ if __name__ == "__main__":
     #Coloca tu path
     #path = ""
     #Coloca el file_name 
-    file_name = "python_testing.txt"
+    file_name = "file_text_v1.txt"
     #Coloca tu path
-    path = "/Users/luistoribio/Documents/curso_python_avanzado/sesion_1_python_avanzado"
+    path = "/Users/luistoribio/Documents/curso_python_avanzado/sesion_1_python_avanzado/files_project"
     #Coloca el file_directory
-    directory_name = "dir_testing"
-    obj.read_file(path,file_name,"w")
+    directory_name = "input_files"
+    #obj.read_file(path,file_name,"r")
     #obj.delete_file(path,file_name)
     #obj.exist_file(path,file_name)
-    #obj.write_file(path,file_name,"w","third content in python avanzado")
+    #obj.write_file(path,file_name,"w","four content in python avanzado")
     #obj.create_folder(path,directory_name)
     #obj.delete_os_folder(path,directory_name)
     #obj.delete_shutil_folder(path,directory_name)
     #obj.list_folder_files(path,directory_name)
     #obj.list_walk_folder_files(path,directory_name)
     #obj.list_pathlib_folder_files(path,directory_name)
+    paths = sorted(Path(path+"/"+directory_name).iterdir(), key=os.path.getmtime)
+    print(paths)
 
 
 
