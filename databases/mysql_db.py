@@ -104,3 +104,15 @@ myresult = mycursor.fetchall()
 
 for x in myresult:
   print(x)
+
+
+
+
+flag = 1
+def fun_flag(flag):
+   #if flag == 1:
+    #    print("Flag = 1")
+    #elif flag == 2:
+    #    print("Flag = 2")
+    #elif flag == 3:
+    #        print("Flag = 2")
