@@ -1,0 +1,85 @@
+from file_managment import file_managment
+import pandas as pd 
+import os
+import csv
+
+class PandasCode(file_managment):
+
+    def __init__(self):
+        print("Hola, soy el constructor.")
+    
+    def read_data_frame(self,path,file_name):
+        
+        df = pd.DataFrame()
+        type_file = file_name.split(".")
+        file_path = os.path.join(path,file_name)
+        
+        if type_file[1] == "csv":
+            df = pd.read_csv(file_path)
+        else:
+            df = pd.read_excel(file_path)
+        
+        columns = df.head(0)
+        print(columns)
+        
+        return df
+
+    def add_a_value(self,df):
+
+        row = pd.DataFrame({2,'Maria Alejandra',33.0,'generic_email@avanzado.com',2,})
+        df = pd.add(row, ignore_index=True)
+        print(df)
+            
+        return df
+    
+    def update_a_value(self,df,columna,valor,column1,valorNuevo):
+        
+        df[column1][df.index[df[columna] == valor]] = valorNuevo
+        print(df)
+            
+        return df
+        
+    def drop_a_value(self,df,colum_,value_to_drop):
+        
+        df.drop(df.index[df[colum_] == value_to_drop], inplace = True)
+        print(df)
+            
+        return "complete"
+    
+
+    def get_columns_name(self,df,column_list):
+        
+        df_column = df.loc[:,column_list]
+        
+        #print(df)
+        
+        return df_column
+    
+    def filter_data(self,df):
+        df[df.Nombre.str.startswith('C')]
+        print(df)
+    
+    def create_file(self):
+        file_name = "New_Circuit_Data.csv"
+        f = open(file_name, "w", encoding="UTF-8")
+        writer = csv.writer(f, lineterminator="\n", quoting=csv.QUOTE_ALL)
+        print('File: ' + file_name + ' opened')
+        f.close()
+        
+    
+
+if __name__ == "__main__":
+    obj = PandasCode()
+    path = "C:/Users/lfsanche/Documents/Curso_Python/python_basico_2/files_project/"
+    file_name = "dataframe_testing.csv"
+    column_ = "edad"
+    df = obj.read_data_frame(path,file_name)
+    obj.add_a_value()
+    obj.update_a_value(df,"Nombre","Nayeli","Email","test@correo.com")
+    obj.drop_a_value(df,"Nombre","Damian Amaury")
+    obj.get_columns_name(df,["edad"])
+    #obj.filter_data(df)
+    #obj.create_file()
+
+
+    

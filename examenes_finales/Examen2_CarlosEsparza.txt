@@ -1,0 +1,49 @@
+#from file_managment import file_managment
+import pandas as pd 
+import os
+import random
+
+class PandasCode():
+    
+    def __init__(self):
+        print("Hola soy el contructor")
+
+    def read_data_frame(self,path,file_name):
+        
+        df = pd.DataFrame()
+        type_file = file_name.split(".")
+        file_path = os.path.join(path,file_name)
+        
+        if type_file[1] == "csv":
+            df = pd.read_csv(file_path)
+        else:
+            df = pd.read_excel(file_path)
+        
+        columns = df.head(0)
+        print(columns)
+
+        return df
+
+    def agregar_valores(self,df,datos):
+        df = pd.concat([df,datos],ignore_index=True)
+
+    def get_columns_name(self,df,column_list):
+        df_column = df.loc[:,column_list]
+        print(df_column)
+        return df_column
+    
+
+
+if __name__ == "__main__":
+    obj = PandasCode()
+    path = "/Users/cesparza/Documents/Oracle/Oracle Content/O2C/Python Basico/files_project/"
+    file_name = "dataframe_testing.csv"
+    print(path+file_name)
+    df = obj.read_data_frame(path,file_name)
+    nuevos_datos = pd.DataFrame({"ID":35,"Nombre":["Carlos"],"edad":[34],"Email":"generic_email@avanzado.com","telefono":[12344],"Escuela":"UDG"})
+    column = "ID"
+    obj.agregar_valores(df,nuevos_datos)
+    #obj.get_columns_name(df,column)
+    #print(df)
+
+    

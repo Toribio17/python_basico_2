@@ -1,0 +1,65 @@
+import pandas as pd
+import os
+
+class PandasCode:
+
+    def __init__(self):
+        
+        print("My constructor")
+        df = pd.DataFrame()
+
+    def read(self, file):
+    
+        if os.path.splitext(file)[1] == '.csv':
+            self.dataframe = pd.read_csv(file)
+        else:
+            self.dataframe = pd.read_excel(file)
+
+        return df
+    
+    def add(self, new_row):
+        
+        self.df = pd.concat([self.dataframe, pd.DataFrame([new_row])])
+
+        print(self.df)
+        print("Value added")
+    
+    def modify(self, row, column_name, updated_value):
+
+        self.df.at[row, column_name] = updated_value
+
+        print(self.df)
+        print("Value updated")
+
+    def delete(self, row_number):
+        
+        self.df.drop(row_number, inplace=True)
+        
+        print(self.df)
+        print("Deleted")
+    
+    def select_columns(self, columns):
+
+        selected_columns = self.df[columns]
+
+        print(selected_columns)
+    
+    def filter_columns(self):
+        
+        self.select_columns(['Nombre', 'edad'])
+    
+    def export (self, file_type):
+        if file_type == "excel":
+            self.df.to_excel('data.xlsx', index=False)
+        else:
+            self.df.to_csv('data.csv', index=False)
+
+if __name__ == '__main__':
+    df = PandasCode()
+    df.read("dataframe_testing.csv")
+    df.add({'Nombre':'Ana', 'edad':26, 'Email':'ana.fierro@oracle.com', 'telefono':34, 'Escuela':'Autonoma'})
+    df.modify(30, 'Nombre', 'Elisa')
+    df.delete(28)
+    df.select_columns(['Nombre', 'telefono'])
+    df.filter_columns()
+    df.export("csv")

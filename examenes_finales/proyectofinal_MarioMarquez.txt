@@ -1,0 +1,56 @@
+import pandas as pd
+
+class PandasCode:
+    def __init__(self, path):
+        print('Hola, soy el constructor')
+        self.df = pd.DataFrame()
+        self.read_csv(path)
+    
+    def read_csv(self, path):
+        try:
+            self.df = pd.read_csv(path)
+        except pd.errors.ParserError as e:
+            print(f"Error: {e}")
+    
+    def add_values(self, values):
+        new_row = pd.DataFrame([values], columns=self.df.columns)
+        self.df = pd.concat([self.df, new_row], ignore_index=True)
+    
+    def modify_value(self, index, column, new_value):
+        self.df.at[index, column] = new_value
+    
+    def remove_value(self, index):
+        self.df = self.df.drop(index).reset_index(drop=True)
+    
+    def select_columns(self, columns):
+        return self.df[columns]
+    
+    def to_csv(self, path):
+        self.df.to_csv(path)
+    
+    def get_all_data(self):
+        return self.df
+
+if __name__ == "__main__":
+    csv_url = 'https://raw.githubusercontent.com/Toribio17/python_basico_2/main/files_project/dataframe_testing.csv'
+    pandas_code = PandasCode(csv_url)
+    
+    pandas_code.add_values({'Nombre': 'Mario', 'edad': 33, 'Email': 'mario_15200@hotmail.com', 'telefono': '3333333333', 'Escuela': 'ABC'})
+    pandas_code.add_values({'Nombre': 'Beto', 'edad': 35, 'Email': 'beto123@hotmail.com', 'telefono': '1111111111', 'Escuela': 'DEF'})
+    
+    print("Despues de agregar el row:")
+    print(pandas_code.get_all_data())
+    
+    pandas_code.modify_value(10.0, 'Nombre', 'New Name')
+    
+    pandas_code.remove_value(20)
+
+    print('\n####################################\n####################################\n')
+    all_data = pandas_code.get_all_data()
+    print(all_data)
+        
+    selected_columns_df = pandas_code.select_columns(['Nombre','telefono'])
+    print(selected_columns_df)
+    
+    pandas_code.to_csv('C:\\Users\\Mario Marquez\\Documents\\Pc\\Python\\newcsv.csv')
+

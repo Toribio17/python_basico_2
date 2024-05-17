@@ -1,0 +1,127 @@
+import pandas as pd
+import os
+
+class PandasCode():
+    def __init__(self):
+        print("Hola soy el constructor")
+
+    def open_csv(self,path,file_name):
+        df = pd.DataFrame()
+        type_file = file_name.split(".")
+        file_path = os.path.join(path,file_name)
+        
+        if type_file[1] == "csv":
+            df = pd.read_csv(file_path)
+        else:
+            df = pd.read_excel(file_path)
+        
+        #columns = df.head(1)
+        print(df)
+        
+        return df
+
+    def add_values(self):
+        df = self.open_csv(path,file_name)
+
+        new_data = {'Nombre': 'David', 'edad': 24 , 'Email': 'Dinamarca@hotmail.com', 'telefono': 3564, 'Escuela': 'UDG'}
+        df = df._append(new_data, ignore_index=True)
+
+        print("\nDataFrame with new values added:")
+        print(df)
+
+    def change_value(self,row,column,name):
+        df = self.open_csv(path,file_name)
+
+        row_index = row  # Index of the row to modify
+        column_name = column  # Name of the column to modify
+        new_value = name  # New value for the specified cell
+        df.at[row_index, column_name] = new_value
+
+        print("\nDataFrame with modified value:")
+        print(df)
+
+    def remove_values(self,row):
+        df = self.open_csv(path,file_name)
+
+        row_index = row  # Index of the row to remove
+        df = df.drop(row_index)
+
+        print("\nDataFrame after removing the row:")
+        print(df)
+
+    def specific_columns(self,column1,column2):
+        df = self.open_csv(path,file_name)
+
+        selected_columns = [column1, column2]  # List of column names to select
+        selected_df = df[selected_columns]
+
+        print("\nDataFrame with selected columns:")
+        print(selected_df)
+
+    def filter(self,column,data):
+        df = self.open_csv(path,file_name)
+
+        filtered_df = self.filter_dataframe(df, column, data)
+
+        print("Filtered DataFrame:")
+        print(filtered_df)
+
+    # Filter Function
+    def filter_dataframe(self, df, column_name, filter_value):
+        filtered_df = df[df[column_name] == filter_value]
+        return filtered_df
+    
+        
+    def df_to_excel(self, path, file_name):
+        df = self.create_df()
+        file_name= path + "/" + file_name
+        self.save_df_to_excel(df, file_name)
+
+
+    def create_df(self):
+        data = {'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+            'Age': [25, 30, 35, 40],
+            'Gender': ['Female', 'Male', 'Male', 'Female']}
+        df = pd.DataFrame(data)
+
+        print("DataFrame:")
+        return df
+
+    def add_city(self):
+        df = self.create_df()
+        df['City'] = ['New York', 'Los Angeles', 'Chicago', 'Houston']
+
+        print("DataFrame with new column 'City':")
+        print(df)
+    
+    # To Excel Function
+    def save_df_to_excel(self,df, filename):
+
+        if not filename.endswith('.xlsx'):
+            filename += '.xlsx'
+        
+        try:
+            # Save DataFrame to Excel
+            df.to_excel(filename, index=False)
+            print(f"DataFrame successfully saved to '{filename}'")
+        except Exception as e:
+            print(f"Error occurred while saving DataFrame to '{filename}': {e}")
+
+
+if __name__ == "__main__":
+    obj = PandasCode()
+
+    #obj.create_df()
+    #obj.add_city()
+
+    file_name = "dataframe_testing.csv"
+    #file_name = "basta.xlsx"
+    path = r"C:\Users\EORNELAS\documents\training\python"
+    obj.open_csv(path,file_name)
+    #obj.add_values()
+    #obj.change_value(1,"Nombre","Betty")
+    #obj.remove_values(1)
+    #obj.specific_columns("Nombre","edad")
+    #obj.filter("Nombre","Daniel")
+    #obj.df_to_excel(path,"python2_df")
+

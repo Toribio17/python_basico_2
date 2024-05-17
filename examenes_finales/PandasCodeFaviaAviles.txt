@@ -1,0 +1,77 @@
+import pandas as pd
+import os
+
+class PandasCode():
+    data_rows = 33
+
+    def __init__(self):
+      print("Hola, Soy el constructor.")
+
+    #Leer un excel o csv
+    def read_data_frame(self, path, file_name):
+      df = pd.DataFrame()
+      type_file = file_name.split(".")
+      file_path = os.path.join(path, file_name)
+
+      if type_file[1] == "csv":
+         df = pd.read_csv(file_path)
+      else:
+         df = pd.read_excel(file_path) 
+
+      header = df.head(self.data_rows)
+      print(header)
+
+      return df
+    
+    #Agregar valores al dataframe
+    def add_row(self,df,name,age,email,tel,school):
+       df_2 = pd.DataFrame({"Unnamed: 0":[self.data_rows+1],"Nombre":[name],"edad":[age],
+                           "Email":[email],
+                           "telefono":[tel], "Escuela": [school]})
+       df =pd.concat([df,df_2], ignore_index=True)
+       
+       print(df)
+       return df
+    
+    #Modificar valores en dataframe
+    def modify_where(self,df,column,value,column1,value1):
+       df[column1][df.index[df[column] == value]] = value1
+       print(df)
+       return df
+    
+    #Remover valores de un dataframe
+    def drop_a_value(self, df, column, value_to_drop):
+       df.drop(df.index[df[column] == value_to_drop], inplace=True)
+       print(df)
+
+       return df
+    
+    #Seleccionar columnas especificas de un dataframe
+    def get_columns(self, df, column_list):
+       df_column = df.loc[:,column_list]
+       print(df_column)
+       return df_column
+    
+    #Filtrar por nombre
+    def filter_name(self,df,name):
+       print(df.loc[df.index[df["Nombre"] == name],:])
+
+       return df
+
+    #Crear csv
+    def create_csv(self,df,new_file):
+       df.to_csv("C:/Users/faviles/Documents/personal/Python basico/" + new_file)
+
+
+if __name__ == "__main__":
+    obj = PandasCode()
+    path = "C:/Users/faviles/Documents/personal/Python basico/"
+    file_name="dataframe_testing.csv"
+    column = "nombre"
+    df = obj.read_data_frame(path,file_name)
+    #obj.add_row(df,"George",34,"email_de_George@gmail.com",2837489505,"Plai")
+    df = obj.modify_where(df,"Nombre","Sarahi","Email","sarahi_nuevo_correo@gmail.com")
+    #obj.drop_a_value(df,"Nombre","Xavier X")
+    #obj.get_columns(df,["Nombre","Email"])
+    #obj.filter_name(df,"David")
+    obj.create_csv(df, "final_list.csv")

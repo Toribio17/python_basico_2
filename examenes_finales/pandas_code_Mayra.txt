@@ -1,0 +1,50 @@
+import pandas as pd 
+import os
+
+class PandasCode():
+    os.environ['PATH_PROJECT'] = "~/Documents/Curso Python Basico"
+
+    def __init__(self):
+        print("I'm the constructor in my Pandas Exam")
+    
+    def add_values(self, df, new_list_values):
+        df.loc[len(df.index)] = new_list_values
+        columns = df.tail(1)
+        print(columns)
+        return df
+    
+    def modify_values(self, df, row_to_mod, col, new_val):
+        df.loc[row_to_mod, ['Nombre']] = [new_val]
+        print(df.loc[row_to_mod:])
+        return df
+    
+    def remove_values(self):
+        pass
+    def select_values(self):
+        pass
+    def filter_by(self):
+        pass
+    
+    def create_df_from(self, path, file_name):
+        df = pd.DataFrame()
+        type_file = file_name.split(".")
+        file_path = os.path.join(path,file_name)
+        print(file_path)
+        if type_file[1] == "csv":
+            df = pd.read_csv(file_path)
+        else:
+            df = pd.read_excel(file_path)
+        columns = df.head(1)
+        return df
+
+        
+if __name__ == "__main__":
+    obj = PandasCode()
+    my_path = os.environ['PATH_PROJECT'] + "/"
+    my_file_name = "dataframe_testing.csv"
+    df = obj.create_df_from(my_path,my_file_name)
+    total_curr_rows = len(df.index)
+    obj.add_values(df,[total_curr_rows,"Mayra", "40", "hola@hellou", "3333333333", "UdG"])
+    row_nm = 3
+    new_value = "Genoveva"
+    obj.modify_values(df,row_nm,['Nombre'], new_value)
